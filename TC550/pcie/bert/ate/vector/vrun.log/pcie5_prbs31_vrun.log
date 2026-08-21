@@ -1,0 +1,849 @@
+		 Start ATE test sequence           0 , ate_initialize(fw bootload)
+               10700 TEST: Wait for testbench to initialize...
+		 Waiting for          1 microseconds for expected events to take place
+               11701 TEST: Start of test...
+               11701 phy_reset should be kept asserted
+               11701 waiting for pma supply stable, while keep refa/b_clk_en low
+		 Waiting for          1 microseconds for expected events to take place
+               12701 refa/b_clk_en asserted, after pma supply stable
+		 Waiting for          1 microseconds for expected events to take place
+  12863.5ns - Info - SUP REF Prescaler : Differential REFCLK detected
+  12864.5ns - Info - SUP REF Prescaler : Differential REFCLK detected
+  12864.5ns - Info - SUP REF Prescaler : Differential REFCLK detected
+               13701 PHY Reset de-asserted
+		Enter CR ACCESS
+		 Waiting for          2 microseconds for expected events to take place
+               20900 Waiting for sram_init_done to get asserted
+		 Waiting for        400 microseconds for expected events to take place
+              100000 INFO: <test.tb> Heartbeat
+              200000 INFO: <test.tb> Heartbeat
+              300000 INFO: <test.tb> Heartbeat
+              400000 INFO: <test.tb> Heartbeat
+		 Reading SRAM_INIT_DONE
+              420900 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 0197
+              427700 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                                             Expecting SRAM_INIT_DONE to be asserted
+		 update firmware if necessary
+		 Waiting for          2 microseconds for expected events to take place
+		 Insert the vector pause for FW updates if necessary in ate.vec at line number                 4299
+		 Waiting for          2 microseconds for expected events to take place
+		 Overriding sram_ext_ld_done to 1'b1
+              431895 CREG WRITE : ADDR=0195h, DATA=0003h
+		 Override per lane resets to 1
+		 Override tx_req, rx_req, and rx_data_en to 0
+              437178 CREG WRITE : ADDR=6020h, DATA=80afh
+		 End of ATE test sequence           0
+              442400 TEST: Wait for PHY and testbench to initialize
+		Enter CR ACCESS
+		 Start ATE test sequence           1 , config phy in ATE_PCIE5_Bypass_CC
+		PHY parameter settings
+		 Overriding tx_slat_xfer_sel
+              446800 CREG WRITE : ADDR=500ch, DATA=1000h
+		 Overriding sup_cntx_en
+              452000 CREG WRITE : ADDR=012ah, DATA=01ffh
+              457200 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding lane_cntx_en
+              462400 CREG WRITE : ADDR=606eh, DATA=0040h
+		 Override rx_rate, rx_vco_ld_val
+              467600 CREG WRITE : ADDR=6053h, DATA=05a0h
+              472800 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Override rx_dfe_bypass, rx_eq_dfe_tap2, rx_eq_dfe_float_en, rx_cdr_ppm_max
+              478000 CREG WRITE : ADDR=6054h, DATA=4033h
+              483200 CREG WRITE : ADDR=605dh, DATA=ffffh
+              488400 CREG WRITE : ADDR=605eh, DATA=ff7fh
+		 Override rx_width
+              493600 CREG WRITE : ADDR=6057h, DATA=1040h
+              498800 CREG WRITE : ADDR=605eh, DATA=ffffh
+              500000 INFO: <test.tb> Heartbeat
+		 Override rx_delta_iq
+              504000 CREG WRITE : ADDR=6052h, DATA=4000h
+              509200 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Override rx_lpd, rx_pstate
+              514400 CREG WRITE : ADDR=6025h, DATA=0014h
+		 Override rx_recal_skip_en, rx_recal_force_en, rx_recal_bank_sel, rx_coarse_adpt_force_en, rx_coarse_adpt_skip_en
+              519600 CREG WRITE : ADDR=6030h, DATA=0754h
+		 Overriding tx_rate
+              524800 CREG WRITE : ADDR=603eh, DATA=0000h
+              530000 CREG WRITE : ADDR=604ch, DATA=fffeh
+		 Override tx_lpd, tx_pstate, tx_pll_en
+              535200 CREG WRITE : ADDR=6026h, DATA=c014h
+		 Override tx_width_r
+              540400 CREG WRITE : ADDR=603eh, DATA=0004h
+              545600 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Override tx_master_pll_state_r, lane_ref_sel_r
+              550800 CREG WRITE : ADDR=6027h, DATA=3c00h
+		 Override tx_recal_bank_sel_r, tx_recal_force_en_r, tx_recal_skip_en_r
+              556000 CREG WRITE : ADDR=6039h, DATA=0054h
+		 Overriding tx_invert_r, tx_clk_rdy_r, and TX_DATA_EN
+              561200 CREG WRITE : ADDR=5001h, DATA=0123h
+		 Overriding sup_misc
+              566400 CREG WRITE : ADDR=0111h, DATA=0000h
+              571600 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Perform refa_clk_div2_en, refb_clkdet_en_r override
+              576800 CREG WRITE : ADDR=0002h, DATA=0f08h
+		 Overriding refa_lane_clk_en
+              582000 CREG WRITE : ADDR=011ch, DATA=0000h
+              587200 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Perform refb_clk_div2_en, refa_clkdet_en_r override
+              592400 CREG WRITE : ADDR=0003h, DATA=0f08h
+		 Overriding refb_lane_clk_en
+              597600 CREG WRITE : ADDR=0127h, DATA=0000h
+              600000 INFO: <test.tb> Heartbeat
+              602800 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding txup_term_offset
+              608000 CREG WRITE : ADDR=010fh, DATA=0000h
+              613200 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding txdn_term_offset
+              618400 CREG WRITE : ADDR=0110h, DATA=0000h
+              623600 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding rx_term_offset
+              628800 CREG WRITE : ADDR=010fh, DATA=0000h
+              634000 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Get access to external resistor, single PHY use the resistor
+              639200 CREG WRITE : ADDR=001fh, DATA=0018h
+		 Overriding bg_en_r
+              644400 CREG WRITE : ADDR=0004h, DATA=03e7h
+		 Overriding rx_vref_ctrl
+              649600 CREG WRITE : ADDR=0110h, DATA=0a00h
+              654800 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Asserting mplla_word_clk_en
+              660000 CREG WRITE : ADDR=0005h, DATA=000ch
+		 Overriding mplla_short_lock_en
+              665200 CREG WRITE : ADDR=011bh, DATA=4200h
+              670400 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Asserting mpllb_word_clk_en
+              675600 CREG WRITE : ADDR=0006h, DATA=000ch
+		 Overriding mpllb_short_lock_en
+              680800 CREG WRITE : ADDR=0126h, DATA=4200h
+*Verdi* FSDB: For performance reasons, the Memory Size Limit has been increased to 128M.
+              686000 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mplla_bw_low
+              691200 CREG WRITE : ADDR=0114h, DATA=0657h
+              696400 CREG WRITE : ADDR=0128h, DATA=3fffh
+              700000 INFO: <test.tb> Heartbeat
+		 Overriding mpllb_bw_low
+              701600 CREG WRITE : ADDR=011fh, DATA=0657h
+              706800 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding mplla_bw_high
+              712000 CREG WRITE : ADDR=0115h, DATA=0639h
+              717200 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding mpllb_bw_high
+              722400 CREG WRITE : ADDR=0120h, DATA=0639h
+              727600 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding mplla_multiplier
+              732800 CREG WRITE : ADDR=0113h, DATA=0a00h
+              738000 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding mplla_bw_threshold
+              743200 CREG WRITE : ADDR=0112h, DATA=0c88h
+              748400 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding ref_clk_mplla_div
+              753600 CREG WRITE : ADDR=0112h, DATA=0c88h
+              758800 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding mplla_word_clk_div
+              764000 CREG WRITE : ADDR=011ch, DATA=0002h
+              769200 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_tx_clk_div
+              774400 CREG WRITE : ADDR=0113h, DATA=0a01h
+              779600 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding mplla_fb_clk_div4_en
+              784800 CREG WRITE : ADDR=011bh, DATA=4600h
+              790000 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_ctl_buf_bypass
+              795200 CREG WRITE : ADDR=011bh, DATA=4600h
+              800000 INFO: <test.tb> Heartbeat
+              800400 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_ssc_peak
+              805600 CREG WRITE : ADDR=011ah, DATA=0000h
+              810800 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_frac_den
+              816000 CREG WRITE : ADDR=0117h, DATA=0000h
+              821200 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_frac_rem
+              826400 CREG WRITE : ADDR=0118h, DATA=0000h
+              831600 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_ssc_step_size
+              836800 CREG WRITE : ADDR=0119h, DATA=0000h
+              842000 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_frac_en
+              847200 CREG WRITE : ADDR=011bh, DATA=4600h
+              852400 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_ssc_up_spread
+              857600 CREG WRITE : ADDR=011bh, DATA=4600h
+              862800 CREG WRITE : ADDR=0129h, DATA=03ffh
+		 Overriding mplla_ssc_en_r
+              868000 CREG WRITE : ADDR=0137h, DATA=0300h
+              873200 CREG WRITE : ADDR=0137h, DATA=0301h
+		 Overriding mpllb_multiplier
+              878400 CREG WRITE : ADDR=011eh, DATA=0a00h
+              883600 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding mpllb_bw_threshold
+              888800 CREG WRITE : ADDR=011dh, DATA=0c88h
+              894000 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding ref_clk_mpllb_div
+              899200 CREG WRITE : ADDR=011dh, DATA=0c88h
+              900000 INFO: <test.tb> Heartbeat
+              904400 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding mpllb_word_clk_div
+              909600 CREG WRITE : ADDR=0127h, DATA=0002h
+              914800 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_tx_clk_div
+              920000 CREG WRITE : ADDR=011eh, DATA=0a01h
+              925200 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding mpllb_fb_clk_div4_en
+              930400 CREG WRITE : ADDR=0126h, DATA=4600h
+              935600 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_ctl_buf_bypass
+              940800 CREG WRITE : ADDR=0126h, DATA=4600h
+              946000 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_ssc_peak
+              951200 CREG WRITE : ADDR=0125h, DATA=0000h
+              956400 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_frac_quot
+              961600 CREG WRITE : ADDR=0121h, DATA=0000h
+              966800 CREG WRITE : ADDR=012ah, DATA=01ffh
+		 Overriding mpllb_frac_den
+              972000 CREG WRITE : ADDR=0122h, DATA=0000h
+              977200 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_frac_rem
+              982400 CREG WRITE : ADDR=0123h, DATA=0000h
+              987600 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_ssc_step_size
+              992800 CREG WRITE : ADDR=0124h, DATA=0000h
+              998000 CREG WRITE : ADDR=012bh, DATA=0fffh
+             1000000 INFO: <test.tb> Heartbeat
+		 Overriding mpllb_frac_en
+             1003200 CREG WRITE : ADDR=0126h, DATA=4600h
+             1008400 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_ssc_up_spread
+             1013600 CREG WRITE : ADDR=0126h, DATA=4600h
+             1018800 CREG WRITE : ADDR=012bh, DATA=0fffh
+		 Overriding mpllb_ssc_en_r
+             1024000 CREG WRITE : ADDR=0137h, DATA=0301h
+             1029200 CREG WRITE : ADDR=0137h, DATA=0305h
+		 Overriding mplla/b_recal_skip_en, mplla/b_recal_force_en, mplla/b_cal_bank_sel
+             1034400 CREG WRITE : ADDR=010eh, DATA=2a54h
+		 Overriding mplla_init_cal_disable, mpllb_init_cal_disable, rtune_req
+             1039600 CREG WRITE : ADDR=0112h, DATA=0c88h
+             1044800 CREG WRITE : ADDR=011dh, DATA=0488h
+             1050000 CREG WRITE : ADDR=0128h, DATA=3fffh
+             1055200 CREG WRITE : ADDR=012bh, DATA=0fffh
+             1060400 CREG WRITE : ADDR=0104h, DATA=0002h
+		 Hooking up tx0_clk to appropriate ROPLL word/dword/qword, mplla/b word/dword/qword clock
+		 Overriding tx_clk_sel
+             1065600 CREG WRITE : ADDR=60f9h, DATA=01f2h
+		 Overriding tx_eq_main_r, tx_beacon_en_r, tx_disable_r
+             1070800 CREG WRITE : ADDR=5003h, DATA=0548h
+		 Overriding tx_eq_pre and tx_eq_post
+             1076000 CREG WRITE : ADDR=5004h, DATA=2050h
+		 Overriding mplla_frac_quot
+             1081200 CREG WRITE : ADDR=0116h, DATA=0000h
+             1086400 CREG WRITE : ADDR=0128h, DATA=3fffh
+		 Overriding mpllb_frac_quot
+             1091600 CREG WRITE : ADDR=0121h, DATA=0000h
+             1096800 CREG WRITE : ADDR=012ah, DATA=01ffh
+             1100000 INFO: <test.tb> Heartbeat
+		 Overriding tx_misc_23_8
+             1102000 CREG WRITE : ADDR=6045h, DATA=0000h
+		 Overriding tx_misc
+             1107200 CREG WRITE : ADDR=603eh, DATA=0004h
+             1112400 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_align_wide_xfer_en
+             1117600 CREG WRITE : ADDR=603eh, DATA=0044h
+             1122800 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding tx_detrx_req
+             1128000 CREG WRITE : ADDR=602fh, DATA=0002h
+		 Overriding rx_misc_23_8
+             1133200 CREG WRITE : ADDR=605bh, DATA=0000h
+		 Overriding rx_misc
+             1138400 CREG WRITE : ADDR=6056h, DATA=0050h
+             1143600 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding tx_dcc_ctrl_cm_range
+             1148800 CREG WRITE : ADDR=603fh, DATA=0090h
+             1154000 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_dcc_ctrl_diff_range
+             1159200 CREG WRITE : ADDR=603fh, DATA=0099h
+             1164400 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding rx_eq_ctle_boost
+             1169600 CREG WRITE : ADDR=6050h, DATA=4000h
+             1174800 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding rx_eq_ctle_pole
+             1180000 CREG WRITE : ADDR=6050h, DATA=4300h
+             1185200 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding rx_eq_dfe_tap1
+             1190400 CREG WRITE : ADDR=6055h, DATA=0014h
+             1195600 CREG WRITE : ADDR=605dh, DATA=ffffh
+             1200000 INFO: <test.tb> Heartbeat
+		 Overriding rx_eq_vga_gain
+             1200800 CREG WRITE : ADDR=6050h, DATA=4310h
+             1206000 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding rx_eq_att_lvl
+             1211200 CREG WRITE : ADDR=6050h, DATA=4310h
+             1216400 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding rx_eq_afe_rate
+             1221600 CREG WRITE : ADDR=6051h, DATA=1000h
+             1226800 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding rx_eq_dfe_float_en
+             1232000 CREG WRITE : ADDR=6054h, DATA=4033h
+             1237200 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_cdr_vco_config
+             1242400 CREG WRITE : ADDR=6052h, DATA=4000h
+             1247600 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding rx_dcc_ctrl_cm_range
+             1252800 CREG WRITE : ADDR=6056h, DATA=9050h
+             1258000 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_dcc_ctrl_diff_range
+             1263200 CREG WRITE : ADDR=6056h, DATA=9950h
+             1268400 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_ref_ld_val
+             1273600 CREG WRITE : ADDR=6055h, DATA=1214h
+             1278800 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding the RX_MARGIN_IN_PROG_OVRD and RX_MARGIN_ERROR_CLEAR_OVRD to 0
+             1284000 CREG WRITE : ADDR=603ah, DATA=2002h
+		 Overriding tx_ropll_cp_ctl_prop
+             1289200 CREG WRITE : ADDR=6040h, DATA=005ah
+             1294400 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_out_div
+             1299600 CREG WRITE : ADDR=6042h, DATA=0100h
+             1300000 INFO: <test.tb> Heartbeat
+             1304800 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding tx_ropll_cp_ctl_intg
+             1310000 CREG WRITE : ADDR=6040h, DATA=3fdah
+             1315200 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_rc_filter
+             1320400 CREG WRITE : ADDR=603fh, DATA=1899h
+             1325600 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_postdiv
+             1330800 CREG WRITE : ADDR=6041h, DATA=0010h
+             1336000 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_fbdiv
+             1341200 CREG WRITE : ADDR=6041h, DATA=0810h
+             1346400 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_refdiv
+             1351600 CREG WRITE : ADDR=6041h, DATA=0811h
+             1356800 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_vco_low_freq
+             1362000 CREG WRITE : ADDR=603fh, DATA=1899h
+             1367200 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_v2i_mode
+             1372400 CREG WRITE : ADDR=6040h, DATA=ffdah
+             1377600 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_bypass
+             1382800 CREG WRITE : ADDR=6042h, DATA=0104h
+             1388000 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding tx_ropll_word_clk_div_sel
+             1393200 CREG WRITE : ADDR=6042h, DATA=0114h
+             1398400 CREG WRITE : ADDR=604dh, DATA=3fffh
+             1400000 INFO: <test.tb> Heartbeat
+		 Overriding tx_pll_word_clk_freq
+             1403600 CREG WRITE : ADDR=6043h, DATA=8000h
+             1408800 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding tx_ropll_div_clk_en
+             1414000 CREG WRITE : ADDR=6042h, DATA=0114h
+             1419200 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding tx_ropll_refsel
+             1424400 CREG WRITE : ADDR=6042h, DATA=0115h
+             1429600 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_fastedge_en
+             1434800 CREG WRITE : ADDR=6043h, DATA=8000h
+             1440000 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding tx_ropll_word_clk_en_r
+             1445200 CREG WRITE : ADDR=6075h, DATA=0018h
+		 Overriding rx_offcan_cont_r, rx_adapt_cont_r, rx_adapt_req_r
+             1450400 CREG WRITE : ADDR=600ah, DATA=0002h
+		 Overriding rx_offcan_cont
+             1455600 CREG WRITE : ADDR=6057h, DATA=9040h
+             1460800 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding tx_offcan_cont
+             1466000 CREG WRITE : ADDR=6041h, DATA=4811h
+             1471200 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding rx_adapt_cont
+             1476400 CREG WRITE : ADDR=6057h, DATA=d040h
+             1481600 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Clear the rx_adapt_dis IRQ to prevent rx_ack assertion after initial powerup sequence completed
+             1486800 CREG WRITE : ADDR=60cch, DATA=0001h
+		 Overriding rx_adapt_mode
+             1492000 CREG WRITE : ADDR=6057h, DATA=d640h
+             1497200 CREG WRITE : ADDR=605eh, DATA=ffffh
+             1500000 INFO: <test.tb> Heartbeat
+		 Overriding rx_adapt_sel
+             1502400 CREG WRITE : ADDR=6057h, DATA=d740h
+             1507600 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_eq_afe_config
+             1512800 CREG WRITE : ADDR=6051h, DATA=1458h
+             1518000 CREG WRITE : ADDR=605dh, DATA=ffffh
+		 Overriding rx_margin_iq and rx_delta_iq
+             1523200 CREG WRITE : ADDR=600ch, DATA=1014h
+		 Overriding rx_term_en_r, rx_disable_r, rx_cdr_ssc_en_r, rx_cdr_track_en_r
+             1528400 CREG WRITE : ADDR=702eh, DATA=0002h
+             1533600 CREG WRITE : ADDR=6007h, DATA=4000h
+             1538800 CREG WRITE : ADDR=5023h, DATA=00c3h
+		 Overriding rx_term_acdc
+             1544000 CREG WRITE : ADDR=6057h, DATA=d741h
+             1549200 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_sigdet_hf_en
+             1554400 CREG WRITE : ADDR=6058h, DATA=0000h
+             1559600 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_sigdet_lf_threshold
+             1564800 CREG WRITE : ADDR=6058h, DATA=0003h
+             1570000 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_sigdet_hf_threshold
+             1575200 CREG WRITE : ADDR=6058h, DATA=0013h
+             1580400 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_sigdet_lfps_filter_en
+             1585600 CREG WRITE : ADDR=6058h, DATA=0013h
+             1590800 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding rx_div16p5_clk_en
+             1596000 CREG WRITE : ADDR=6057h, DATA=c741h
+             1600000 INFO: <test.tb> Heartbeat
+             1601200 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding tx_ropll_div16p5_clk_en
+             1606400 CREG WRITE : ADDR=6042h, DATA=0115h
+             1611600 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding rx_term_ctrl
+             1616800 CREG WRITE : ADDR=6057h, DATA=c74fh
+             1622000 CREG WRITE : ADDR=6059h, DATA=6000h
+             1627200 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding tx_term_ctrl
+             1632400 CREG WRITE : ADDR=6043h, DATA=8006h
+             1637600 CREG WRITE : ADDR=6044h, DATA=0010h
+             1642800 CREG WRITE : ADDR=604ch, DATA=ffffh
+		 Overriding rx_dig_div_clk_sel
+             1648000 CREG WRITE : ADDR=6059h, DATA=6000h
+             1653200 CREG WRITE : ADDR=605fh, DATA=01ffh
+		 Overriding rx_div_clk_en
+             1658400 CREG WRITE : ADDR=6059h, DATA=6000h
+             1663600 CREG WRITE : ADDR=605fh, DATA=01ffh
+		 Overriding rx_div_clk_sel
+             1668800 CREG WRITE : ADDR=6059h, DATA=6000h
+             1674000 CREG WRITE : ADDR=605fh, DATA=01ffh
+		 Disable RX CDR PPM detector
+             1679200 CREG WRITE : ADDR=7067h, DATA=0004h
+		 Overriding lane_rx2tx_par_lb_en and lane_tx2rx_ser_lb_en to 0
+             1684400 CREG WRITE : ADDR=6028h, DATA=000ah
+		 Overriding tx_ropll_125mhz_clk_en
+             1689600 CREG WRITE : ADDR=6041h, DATA=4811h
+             1694800 CREG WRITE : ADDR=604dh, DATA=3fffh
+             1700000 INFO: <test.tb> Heartbeat
+		 Overriding tx_dly_cal_en
+             1700000 CREG WRITE : ADDR=6042h, DATA=0115h
+             1705200 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding rx_125mhz_clk_en
+             1710400 CREG WRITE : ADDR=6057h, DATA=c74fh
+             1715600 CREG WRITE : ADDR=605eh, DATA=ffffh
+		 Overriding tx_dig_ropll_div_clk_sel
+             1720800 CREG WRITE : ADDR=6044h, DATA=0010h
+             1726000 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 Overriding tx_dual_cntx_en
+             1731200 CREG WRITE : ADDR=603eh, DATA=8044h
+             1736400 CREG WRITE : ADDR=604dh, DATA=3fffh
+		 End of ATE test sequence           1
+		 Start ATE test sequence           2 , PHY power up
+		 JTAG ID READ for selective register read enabling
+             1741600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 0000
+             1748400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0111010011001101
+
+		                                                                         JTAG ID is read as expected
+             1748400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 0001
+             1755200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0110110101001011
+
+		                                                                         JTAG ID is read as expected
+		 Overriding lane_cntx_en_o
+             1755200 CREG WRITE : ADDR=606ch, DATA=0200h
+             1760400 CREG WRITE : ADDR=606ch, DATA=0600h
+		 Enable ate mode
+             1765600 CREG WRITE : ADDR=019dh, DATA=0001h
+		 Overriding TOKEN_DLY
+             1770800 CREG WRITE : ADDR=0133h, DATA=0000h
+		 De-assrting pma tx_data_en to 0
+             1776000 CREG WRITE : ADDR=5001h, DATA=0123h
+             1781200 CREG WRITE : ADDR=5001h, DATA=0123h
+		 Overriding rx_invert
+             1786400 CREG WRITE : ADDR=5020h, DATA=0008h
+		 De-assrting per lane resets to 0
+             1791600 CREG WRITE : ADDR=6020h, DATA=80aah
+		 Waiting for PHY power up...
+		 Insert dummy cycle     148000 for normal FW in ate.vec at line number                17968
+		 Waiting for        300 microseconds for expected events to take place
+             1800000 INFO: <test.tb> Heartbeat
+             1900000 INFO: <test.tb> Heartbeat
+             2000000 INFO: <test.tb> Heartbeat
+		 Reading INIT_PWRUP_DONE on all lanes
+             2096800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 3014
+             2100000 INFO: <test.tb> Heartbeat
+             2103600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                          Expecting INIT_PWRUP_DONE(bit[0]) on Lane 0 to be asserted
+             2103600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 3214
+             2110400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                          Expecting INIT_PWRUP_DONE(bit[0]) on Lane 1 to be asserted
+             2110400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 3414
+             2117200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                          Expecting INIT_PWRUP_DONE(bit[0]) on Lane 2 to be asserted
+             2117200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 3614
+             2124000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                          Expecting INIT_PWRUP_DONE(bit[0]) on Lane 3 to be asserted
+		 Reading RX ACK and RX VALID at PMA level
+             2124000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 103c
+             2130800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110000
+
+		       Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be de-asserted on Channel0
+             2130800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 123c
+             2137600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110000
+
+		       Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be de-asserted on Channel1
+             2137600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 143c
+             2144400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110000
+
+		       Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be de-asserted on Channel2
+             2144400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 163c
+             2151200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110000
+
+		       Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be de-asserted on Channel3
+		 Reading RX ACK at PHY level
+             2151200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2019
+             2158000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channle0
+             2158000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2219
+             2164800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channle1
+             2164800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2419
+             2171600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channle2
+             2171600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2619
+             2178400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channle3
+		 Reading TX ACK at PMA level
+             2178400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1012
+             2185200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel0 to be de-asserted
+             2185200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1212
+             2192000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel1 to be de-asserted
+             2192000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1412
+             2198800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel2 to be de-asserted
+             2198800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1612
+             2200000 INFO: <test.tb> Heartbeat
+             2205600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel3 to be de-asserted
+		 Reading TX ACK at PHY level
+             2205600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2004
+             2212400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel0 to be de-asserted
+             2212400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2204
+             2219200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel1 to be de-asserted
+             2219200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2404
+             2226000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel2 to be de-asserted
+             2226000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 2604
+             2232800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                              Expecting TX ACK(bit[0]) of Channel3 to be de-asserted
+		 End of ATE test sequence           2
+		 Start ATE test sequence           3 , Check pll states
+		 Read mpll and ropll state
+             2232800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 20a5
+             2239600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                                  Lane 0 ROPLL state
+             2239600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 20a3
+             2246400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                           Lane 0 MPLLB state bit[1]
+             2246400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 22a5
+             2253200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                                  Lane 1 ROPLL state
+             2253200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 22a3
+             2260000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                           Lane 1 MPLLB state bit[1]
+             2260000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 24a5
+             2266800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                                  Lane 2 ROPLL state
+             2266800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 24a3
+             2273600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                           Lane 2 MPLLB state bit[1]
+             2273600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 26a5
+             2280400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                           Lane 2 MPLLB state bit[1]
+             2280400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 26a3
+             2287200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+
+		                                                                           Lane 3 MPLLB state bit[1]
+		 End of ATE test sequence           3
+		 Start ATE test sequence           4 , set loopback_mode 00
+		 Overriding lane_rx2tx_par_lb_en and lane_tx2rx_ser_lb_en
+             2287200 CREG WRITE : ADDR=6028h, DATA=000ah
+		 End of ATE test sequence           4
+		 Start ATE test sequence           5 , rx adaptation
+		 Enabling TX LBERT in LFSR31
+             2292400 CREG WRITE : ADDR=5071h, DATA=0001h
+		 Toggle rx resets
+             2297600 CREG WRITE : ADDR=6020h, DATA=80abh
+             2300000 INFO: <test.tb> Heartbeat
+             2302800 CREG WRITE : ADDR=6020h, DATA=80abh
+		 Waiting for         10 microseconds for expected events to take place
+             2318000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 103c
+             2324800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110001
+
+		                                                 Expecting RX ACK(bit[0]) to be asserted on Channel0
+             2324800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 123c
+             2331600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110001
+
+		                                                 Expecting RX ACK(bit[0]) to be asserted on Channel1
+             2331600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 143c
+             2338400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110001
+
+		                                                 Expecting RX ACK(bit[0]) to be asserted on Channel2
+             2338400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 163c
+             2345200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110001
+
+		                                                 Expecting RX ACK(bit[0]) to be asserted on Channel3
+             2345200 CREG WRITE : ADDR=6020h, DATA=80aah
+             2350400 CREG WRITE : ADDR=6020h, DATA=80aah
+		 Waiting for        100 microseconds for expected events to take place
+             2400000 INFO: <test.tb> Heartbeat
+             2455600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 103c
+             2462400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110100
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channel0
+             2462400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 123c
+             2469200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110000
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channel1
+             2469200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 143c
+             2476000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110100
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channel2
+             2476000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 163c
+             2482800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110100
+
+		                                              Expecting RX ACK(bit[0]) to be de-asserted on Channel3
+		 Waiting for         60 microseconds for expected events to take place
+             2500000 INFO: <test.tb> Heartbeat
+		 Enable rxX_data_en
+             2542800 CREG WRITE : ADDR=6020h, DATA=c0aah
+		 Waiting for         50 microseconds for expected events to take place
+		 Reading RX ACK and RX VALID at PMA level
+             2598000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 103c
+             2600000 INFO: <test.tb> Heartbeat
+             2604800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110010
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel0
+             2604800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 123c
+             2611600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110110
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel1
+             2611600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 143c
+             2618400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110010
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel2
+             2618400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 163c
+             2625200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110010
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel3
+		 Overriding rx_adapt_req
+             2625200 CREG WRITE : ADDR=600ah, DATA=0003h
+             2630400 CREG WRITE : ADDR=600ah, DATA=0003h
+		 Waiting for rx adaptation to complete...
+		 Waiting for        100 microseconds for expected events to take place
+             2700000 INFO: <test.tb> Heartbeat
+		 Insert dummy cycle      49000 for normal FW in ate.vec at line number                27356
+		 Reading RX ADAPT ACK at PHY level
+             2735600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 201a
+             2742400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                           Expecting RX ADAPT ACK(bit[0]) to be asserted on Channle0
+             2742400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 221a
+             2749200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                           Expecting RX ADAPT ACK(bit[0]) to be asserted on Channle1
+             2749200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 241a
+             2756000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                           Expecting RX ADAPT ACK(bit[0]) to be asserted on Channle2
+             2756000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 261a
+             2762800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                           Expecting RX ADAPT ACK(bit[0]) to be asserted on Channle3
+             2762800 CREG WRITE : ADDR=600ah, DATA=0002h
+             2768000 CREG WRITE : ADDR=600ah, DATA=0002h
+		 Waiting for        100 microseconds for expected events to take place
+             2800000 INFO: <test.tb> Heartbeat
+		 Reading RX ADAPT ACK at PHY level
+             2873200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 201a
+             2880000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                        Expecting RX ADAPT ACK(bit[0]) to be de-asserted on Channle0
+             2880000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 221a
+             2886800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                        Expecting RX ADAPT ACK(bit[0]) to be de-asserted on Channle1
+             2886800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 241a
+             2893600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                        Expecting RX ADAPT ACK(bit[0]) to be de-asserted on Channle2
+             2893600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 261a
+             2900000 INFO: <test.tb> Heartbeat
+             2900400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                        Expecting RX ADAPT ACK(bit[0]) to be de-asserted on Channle3
+		 Disable rxX_data_en after adaptation done
+             2900400 CREG WRITE : ADDR=6020h, DATA=80aah
+		 Disable TX LBERT in LFSR31
+             2905600 CREG WRITE : ADDR=5071h, DATA=0000h
+		 End of ATE test sequence           5
+		 Start ATE test sequence           6 , run bert test
+		+BERT_TEST
+		+*************************************************************************
+		+Functional test to verify that the device is operational and
+		+the BERTS are functioning. The device is set-up in external loopback.
+		+The berts are tested that they can match lfsr31 and that they can count
+		+errors
+		+*************************************************************************
+		 Enabling TX LBERT in LFSR31
+             2910800 CREG WRITE : ADDR=5071h, DATA=0001h
+		 Re-enable rxX_data_en to track receive data
+             2916000 CREG WRITE : ADDR=6020h, DATA=c0aah
+		 Waiting for         50 microseconds for expected events to take place
+		 Reading RX ACK and RX VALID at PMA level
+             2971200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 103c
+             2978000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110110
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel0
+             2978000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 123c
+             2984800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110010
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel1
+             2984800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 143c
+             2991600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110010
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel2
+             2991600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 163c
+             2998400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000001110110
+
+		          Expecting RX ACK(bit[0]) to be de-asserted and RX VALID(bit[1]) to be asserted on Channel3
+		 Read tx ropll state
+             2998400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 20a5
+             3000000 INFO: <test.tb> Heartbeat
+             3005200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+             3005200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 22a5
+             3012000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+             3012000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 24a5
+             3018800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+             3018800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 26a5
+             3025600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000010
+		 Enabling RX LBERT in LFSR31 and setting RX LBERT SYNC to 1
+             3025600 CREG WRITE : ADDR=5093h, DATA=0001h
+		 Set RX LBERT SYNC to 0
+             3030800 CREG WRITE : ADDR=5093h, DATA=0001h
+		 Set RX LBERT SYNC to 1
+             3036000 CREG WRITE : ADDR=5093h, DATA=0011h
+		 Set RX LBERT SYNC to 0
+             3041200 CREG WRITE : ADDR=5093h, DATA=0001h
+		 Set RX LBERT SYNC to 1
+             3046400 CREG WRITE : ADDR=5093h, DATA=0011h
+		 Set RX LBERT SYNC to 0
+             3051600 CREG WRITE : ADDR=5093h, DATA=0001h
+		+BERT_TEST
+		+*************************************************************************
+		+Functional test to verify that the device is operational and
+		+the BERTS are functioning. The device is set-up in external loopback.
+		+The berts are tested that they can match lfsr31 and that they can count
+		+errors
+		+*************************************************************************
+		 Waiting for         10 microseconds for expected events to take place
+             3066800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1094
+             3073600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+             3073600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1094
+             3080400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                                              Bert errors on channel0 expect 0 error
+             3080400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1294
+             3087200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+             3087200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1294
+             3094000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                                              Bert errors on channel1 expect 0 error
+             3094000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1494
+             3100000 INFO: <test.tb> Heartbeat
+             3100800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+             3100800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1494
+             3107600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                                              Bert errors on channel2 expect 0 error
+             3107600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1694
+             3114400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+             3114400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1694
+             3121200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000000
+
+		                                                              Bert errors on channel3 expect 0 error
+		 Introducing error
+             3121200 CREG WRITE : ADDR=5071h, DATA=0011h
+             3126400 CREG WRITE : ADDR=5071h, DATA=0001h
+		 Waiting for         10 microseconds for expected events to take place
+             3141600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1094
+             3148400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+             3148400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1094
+             3155200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                                              Bert errors on channel0 expect 1 error
+             3155200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1294
+             3162000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+             3162000 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1294
+             3168800 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                                              Bert errors on channel1 expect 1 error
+             3168800 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1494
+             3175600 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+             3175600 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1494
+             3182400 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                                              Bert errors on channel2 expect 1 error
+             3182400 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1694
+             3189200 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+             3189200 <test.tb.jtag.read_cr_wo_set_ir> JTAG reading control register address: 1694
+             3196000 <test.tb.jtag.read_cr_wo_set_ir> JTAG data read: 0000000000000001
+
+		                                                              Bert errors on channel3 expect 1 error
+		 disable RX LBERT matcher
+             3196000 CREG WRITE : ADDR=5093h, DATA=0000h
+             3200000 INFO: <test.tb> Heartbeat
+		 disable RX datapath 
+             3201200 CREG WRITE : ADDR=6020h, DATA=80aah
+		 disable TX LBERT in LFSR31
+             3206400 CREG WRITE : ADDR=5071h, DATA=0000h
+		 End of ATE test sequence           6
+		 Waiting for         10 microseconds for expected events to take place
+		==================================================================
+		   TEST STATUS : ATE_BERT TEST PASSED
+		   Test Completed with zero e r r o r s
+		==================================================================
+$finish called from file "../../../../testbench/tests/ate_bert_test/ate_bert_test.v", line 78.
+$finish at simulation time        3221600000000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 3221600000000 fs
+CPU Time:  26020.540 seconds;       Data structure size:  74.5Mb
+Thu Aug 20 20:00:33 2026
+CPU time: 193.160 seconds to compile + 20.949 seconds to elab + 1.074 seconds to link + 26021.113 seconds in simulation
+Verdi KDB elaboration done and the database successfully generated
