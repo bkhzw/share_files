@@ -1,0 +1,416 @@
+`ifndef __PCIE_PHY_JTAG_BERT_TEST_SV__
+`define __PCIE_PHY_JTAG_BERT_TEST_SV__
+// LANEN_DIG_TX_LBERT_CTL 0x1(N*2+0)71  bit15 reserved bit14:5 PAT0 bit4 trigger_error bit3:0 MODE
+// LANEN_DIG_RX_LBERT_CTL 0x1(N*2+0)93  bit15:11 reserved bit10 error_count_clr_n bit9 use_pat_sel bit8 use_sample_cnt bit7 ber_sel bit6:5 pat_sel bit4 sync bit3:0 MODE
+
+class pcie_phy_jtag_bert_test extends pcie_base_test;
+   pcie_jtag_base_seq jtag_api[`MAX_NUM_PHYS];
+
+   `uvm_component_utils(pcie_phy_jtag_bert_test)
+
+   function new(string name = "pcie_phy_jtag_bert_test", uvm_component parent);
+      super.new(name, parent);
+   endfunction
+
+   virtual task main_phase(uvm_phase phase);
+      bit[15:0] read_data,exp_data ;
+      bit[3:0] bert_mode;
+      bit[31:0] Pattern;
+
+      super.main_phase(phase);
+      `uvm_info(get_type_name(), "Enter main_phase...", UVM_LOW)
+      phase.raise_objection(this);
+
+      for(int pn=0; pn<`MAX_NUM_PHYS; pn++) begin
+         uvm_hdl_force({`DV_STRINGIFY(`PCIE_TOP),$sformatf(".pcie_core_0.pcie_phy_pipe_0.phy%0d_cr_para_sel",pn)},2'b00);
+      end
+
+      //crsel mode shift
+      write_ir(0,8'h31);
+      `uvm_info(get_full_name(),$sformatf("write ir done"),UVM_LOW)
+      ate_initialize(0, 0);
+      bert_test_per_lane(0, 0);
+
+      phase.drop_objection(this);
+      `uvm_info(get_type_name(), "Exit main_phase...", UVM_LOW)
+   endtask
+
+   task write_ir(bit[1:0] phy_num, bit [`SVT_JTAG_MAX_INSTRUCTION_WIDTH-1:0] cmd);
+      pcie_jtag_base_seq jtag_seq;
+      
+      jtag_seq = pcie_jtag_base_seq::type_id::create("jtag_seq");
+      jtag_seq.cmd_type = svt_jtag_types::IR;
+      jtag_seq.cmd = cmd;
+      jtag_seq.start(vsqr.jtag_vip_sqr[phy_num]);
+   endtask
+
+   task shift_dr(bit[1:0] phy_num, input bit [`SVT_JTAG_MAX_DATA_WIDTH-1:0] cmd, int cmd_len = 18, output bit[`SVT_JTAG_MAX_DATA_WIDTH-1:0] sampled_tdo);
+      pcie_jtag_base_seq jtag_seq;
+      
+      `uvm_info(get_full_name(),$sformatf("cmd - 0x%0x",cmd),UVM_LOW)
+      jtag_seq = pcie_jtag_base_seq::type_id::create("jtag_seq");
+      jtag_seq.cmd_type = svt_jtag_types::DR;
+      jtag_seq.cmd = cmd;
+      jtag_seq.cmd_len = cmd_len;
+      jtag_seq.start(vsqr.jtag_vip_sqr[phy_num]);
+      sampled_tdo = jtag_seq.sampled_tdo;
+   endtask
+   
+   task jtag_cr_write(bit[1:0] phy_num, bit[15:0] addr, bit[15:0] data);
+      bit[17:0] cmd;
+      bit [`SVT_JTAG_MAX_DATA_WIDTH-1:0] unused;
+
+      cmd = {2'b00,addr};
+      shift_dr(phy_num,cmd,18,unused);
+      cmd = {2'b01,data};
+      shift_dr(phy_num,cmd,18,unused);
+   endtask
+
+   task jtag_cr_read(bit[1:0] phy_num, bit[15:0] addr, output bit[15:0] data);
+      bit[17:0] cmd;
+      bit [`SVT_JTAG_MAX_DATA_WIDTH-1:0] unused;
+
+      cmd = {2'b11,addr};
+      shift_dr(phy_num,cmd,18,unused);
+      cmd = {2'b10,16'h0};
+      shift_dr(phy_num,cmd,18,data);
+   endtask
+
+   task ate_initialize(bit[1:0] pn, bit[1:0] ln);
+      int tx_pstate_cnt,rx_pstate_cnt;
+      uvm_reg_data_t      reg_data;
+      //from ate initialize
+      //RAWLANEX_DIG_PCS_XF_ATE_OVRD_IN
+      jtag_cr_read(pn, 'h2020+'h200*ln, reg_data);
+      reg_data[0] = 1'b1; //RX_RESET_ATE_OVRD_VAL
+      reg_data[1] = 1'b1; //RX_RESET_ATE_OVRD_EN
+      reg_data[2] = 1'b1; //TX_RESET_ATE_OVRD_VAL
+      reg_data[3] = 1'b1; //TX_RESET_ATE_OVRD_EN
+      `uvm_info(get_full_name(),$sformatf("Override per lane resets to 1 phy%0d lane%0d",pn,ln),UVM_LOW)
+      reg_data[4] = 1'b0; //RX_REQ_ATE_OVRD_VAL
+      reg_data[5] = 1'b1; //RX_REQ_ATE_OVRD_EN
+      reg_data[6] = 1'b0; //TX_REQ_ATE_OVRD_VAL
+      reg_data[7] = 1'b1; //TX_REQ_ATE_OVRD_EN
+      reg_data[14] = 1'b0; //RX_DATA_EN_ATE_OVRD_VAL
+      reg_data[15] = 1'b1; //RX_DATA_EN_ATE_OVRD_EN
+      `uvm_info(get_full_name(),$sformatf("Override tx_req, rx_req, and rx_data_en to 0 phy%0d lane%0d",pn,ln),UVM_LOW)
+      jtag_cr_write(pn, 'h2020+'h200*ln, reg_data);
+      `uvm_info(get_full_name(),$sformatf("phy%0d RAWLANE%0d_DIG_PCS_XF_ATE_OVRD_IN ",pn,ln),UVM_LOW)
+
+      //from ate_initialize_test
+
+      //TODO cfg_for_all_lanes(tb.curr_freq,tb.curr_prot);
+
+
+
+      ////RAWLANEN_DIG_FSM_FSM_OVRD_CTL
+      //jtag_cr_read(pn, 'h2180+'h200*ln, reg_data);
+      ////dzq reg_data[14] = 1'b0; //FSM_OVRD_EN
+      //reg_data[14] = 1'b1; //FSM_OVRD_EN
+      //jtag_cr_write(pn, 'h2180+'h200*ln, reg_data);
+      //`uvm_info(get_full_name(),$sformatf("Release overriding fsm_ovrd_en on phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //RAWLANEN_DIG_PCS_XF_LANE_CNTX_OVRD_1
+      jtag_cr_read(pn, 'h206c+'h200*ln, reg_data);
+      reg_data[9] = 1'b1; //LANE_CNTX_EN_I_OVRD_VAL
+      jtag_cr_write(pn, 'h206c+'h200*ln, reg_data);
+
+      jtag_cr_read(pn, 'h206c+'h200*ln, reg_data);
+      reg_data[10] = 1'b1; //LANE_CNTX_EN_I_OVRD_EN
+      jtag_cr_write(pn, 'h206c+'h200*ln, reg_data);
+      `uvm_info(get_full_name(),$sformatf("Overriding lane_cntx_en_o phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //RAWCMN_DIG_AON_ATE_MODE_EN
+      jtag_cr_read(pn, 'h19d, reg_data);
+      reg_data[0] = 1'b1; //ATE_MODE_EN
+      jtag_cr_write(pn, 'h19d, reg_data);
+      `uvm_info(get_full_name(),$sformatf("Enable ate mode phy%0d",pn),UVM_LOW)
+
+      //RAWCMN_DIG_TOKEN_DLY
+      jtag_cr_read(pn, 'h133, reg_data);
+      reg_data[2:0] = 3'b000; //RAWCMN_DIG_TOKEN_DLY_VAL
+      jtag_cr_write(pn, 'h133, reg_data);
+      `uvm_info(get_full_name(),$sformatf("Overriding TOKEN_DLY phy%0d",pn),UVM_LOW)
+
+      //tx_data_en,rx_data_en input could not be control, the signal was from the pipe interface, so config cr reg is the only option
+      //LANEN_DIG_ASIC_TX_OVRD_IN_0
+      jtag_cr_read(pn, 'h1001+'h200*ln, reg_data);
+      reg_data[7:6] = 2'b0; //tx_data_en 
+      jtag_cr_write(pn, 'h1001+'h200*ln, reg_data);
+
+      jtag_cr_read(pn, 'h1001+'h200*ln, reg_data);
+      reg_data[8] = 1'b1; //overide en
+      jtag_cr_write(pn, 'h1001+'h200*ln, reg_data);
+      `uvm_info(get_full_name(),$sformatf("De-asserting pma tx_data_en to 0 phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //LANEN_DIG_ASIC_RX_OVRD_IN_0
+      jtag_cr_read(pn, 'h1020+'h200*ln, reg_data);
+      reg_data[2] = 1'b0; //INVERT
+      reg_data[3] = 1'b1; //INVERT_OVRD_EN
+      jtag_cr_write(pn, 'h1020+'h200*ln, reg_data);
+      `uvm_info(get_full_name(),$sformatf("Overriding rx_invert phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //RAWLANEX_DIG_PCS_XF_ATE_OVRD_IN
+      jtag_cr_read(pn, 'h2020+'h200*ln, reg_data);
+      reg_data[0] = 1'b0; //RX_RESET_ATE_OVRD_VAL
+      reg_data[1] = 1'b1; //RX_RESET_ATE_OVRD_EN
+      reg_data[2] = 1'b0; //TX_RESET_ATE_OVRD_VAL
+      reg_data[3] = 1'b1; //TX_RESET_ATE_OVRD_EN
+      jtag_cr_write(pn, 'h2020+'h200*ln, reg_data);
+      `uvm_info(get_full_name(),$sformatf("De-assrting per lane resets to 0 phy%0d",pn),UVM_LOW)
+
+   //TODO read_init_pwrup_done_phy(1'b1);
+
+   //TODO //rxX_data_en has been overrided to 1'b0 in previous steps
+   //TODO read_rx_ack_rx_valid_pma (1'b0,1'b0);
+
+   //TODO read_rx_ack_phy(1'b0);
+
+   //TODO read_tx_ack_pma(1'b0);
+
+   //TODO read_tx_ack_phy(1'b0);
+   //TODO   ate_check_pll_state;
+
+   //TODO ate_set_loopback_mode({tb.ate_lane0_rx2tx_par_lb_en,tb.ate_lane0_tx2rx_ser_lb_en});
+
+   //TODO ate_rx_adaptation;
+
+   //  $display ("\t\t Enabling TX LBERT in LFSR31");
+   //  tb.DWC_PCIE5_X4NS_CR_LANE0_DIG_TX_LBERT_CTL_val`DWC_PCIE5_X4NS_CR_LANE0_DIG_TX_LBERT_CTL_MODE=4'd1;
+   //  asr (`ACCESS_TYPE, `DWC_PCIE5_X4NS_CR_LANEX_DIG_TX_LBERT_CTL, tb.DWC_PCIE5_X4NS_CR_LANE0_DIG_TX_LBERT_CTL_val);
+   //       tb.DWC_PCIE5_X4NS_CR_RAWLANE0_DIG_PCS_XF_ATE_OVRD_IN_val`DWC_PCIE5_X4NS_CR_RAWLANE0_DIG_PCS_XF_ATE_OVRD_IN_RX_DATA_EN_ATE_OVRD_VAL=1'b1;
+   //  asr (`ACCESS_TYPE, `DWC_PCIE5_X4NS_CR_RAWLANEX_DIG_PCS_XF_ATE_OVRD_IN, tb.DWC_PCIE5_X4NS_CR_RAWLANE0_DIG_PCS_XF_ATE_OVRD_IN_val);
+
+   //  // Wait for 38000 UI for bit locking
+   //  vec_pause (50);
+   //  read_rx_ack_rx_valid_pma(1'b0, 1'b1);
+
+   // $display ("\t\t Read tx ropll state");
+   // tb.sel_rd_mask=tb.mask_all_zero;
+   // tb.sel_rd_mask`DWC_PCIE5_X4NS_CR_RAWLANE0_DIG_PMA_XF_TX_PMA_IN_ROPLL_STATE=1'b1;
+   // agr_test (`ACCESS_TYPE,`DWC_PCIE5_X4NS_CR_RAWLANE0_DIG_PMA_XF_TX_PMA_IN, data, tb.sel_rd_mask);
+   //     tb.sel_rd_mask=tb.mask_all_zero;
+   // tb.sel_rd_mask`DWC_PCIE5_X4NS_CR_RAWLANE4_DIG_PMA_XF_TX_PMA_IN_ROPLL_STATE=1'b1;
+   // agr_test (`ACCESS_TYPE,`DWC_PCIE5_X4NS_CR_RAWLANE4_DIG_PMA_XF_TX_PMA_IN, data, tb.sel_rd_mask);
+   // tb.sel_rd_mask=tb.mask_all_zero;
+   // tb.sel_rd_mask`DWC_PCIE5_X4NS_CR_RAWLANE5_DIG_PMA_XF_TX_PMA_IN_ROPLL_STATE=1'b1;
+   // agr_test (`ACCESS_TYPE,`DWC_PCIE5_X4NS_CR_RAWLANE5_DIG_PMA_XF_TX_PMA_IN, data, tb.sel_rd_mask);
+   //      $display ("\t\t Enabling RX LBERT in LFSR31 and setting RX LBERT SYNC to 1");
+   //  tb.DWC_PCIE5_X4NS_CR_LANE0_DIG_RX_LBERT_CTL_val`DWC_PCIE5_X4NS_CR_LANE0_DIG_RX_LBERT_CTL_MODE=4'd1;
+   //  asr (`ACCESS_TYPE, `DWC_PCIE5_X4NS_CR_LANEX_DIG_RX_LBERT_CTL, tb.DWC_PCIE5_X4NS_CR_LANE0_DIG_RX_LBERT_CTL_val);
+   //  ate_clear_err_cnt;
+
+       
+
+
+
+
+
+
+      //                //LANEX_DIG_RX_LBERT_CTL
+      //                jtag_cr_read(pn, 'h1093+'h200*ln, reg_data);
+      //                reg_data[3:0] = 0;
+      //                jtag_cr_write(pn, 'h1093+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("disable RX LBERT matcher phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //                //RAWLANEX_DIG_PCS_XF_ATE_OVRD_IN
+      //                jtag_cr_read(pn, 'h2020+'h200*ln, reg_data);
+      //                reg_data[14] = 1'b0; //RX_DATA_EN_ATE_OVRD_EN
+      //                reg_data[15] = 1'b1; //RX_DATA_EN_ATE_OVRD_EN
+      //                jtag_cr_write(pn, 'h2020+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("disable RX datapath phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //                //LANEX_DIG_TX_LBERT_CTL
+      //                jtag_cr_read(pn, 'h1071+'h200*ln, reg_data);
+      //                reg_data[3:0] = 0;
+      //                jtag_cr_write(pn, 'h1071+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("disable TX LBERT before pstate change phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //                //LANEN_DIG_ASIC_TX_OVRD_IN_0
+      //                jtag_cr_read(pn, 'h1001+'h200*ln, reg_data);
+      //                reg_data[7:6] = 2'b0; //tx_data_en_ovrd_val 
+      //                reg_data[8] = 1'b1; //tx_data_en_ovrd_en 
+      //                jtag_cr_write(pn, 'h1001+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("disable tx_data_en_r before pstate change phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //                //RAWLANEX_DIG_PCS_XF_ATE_OVRD_IN_1
+      //                jtag_cr_read(pn, 'h2025+'h200*ln, reg_data);
+      //                reg_data[1:0] = 2'b0; //RX_PSTATE_ATE_OVRD_VAL
+      //                reg_data[2] = 1'b1; //RX_PSTATE_ATE_OVRD_EN
+      //                jtag_cr_write(pn, 'h2025+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("Override rx_pstate p0 phy%0d lane%0d",pn,ln),UVM_LOW)
+
+      //                //RAWLANEX_DIG_PCS_XF_ATE_OVRD_IN_2
+      //                jtag_cr_read(pn, 'h2026+'h200*ln, reg_data);
+      //                reg_data[1:0] = 2'b0; //TX_PSTATE_ATE_OVRD_VAL
+      //                reg_data[2] = 1'b1; //TX_PSTATE_ATE_OVRD_EN
+      //                reg_data[14] = 1'b0; //TX_PLL_EN_ATE_OVRD_VAL
+      //                reg_data[15] = 1'b1; //TX_PLL_EN_ATE_OVRD_EN
+      //                jtag_cr_write(pn, 'h2026+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("Override tx_pstate p0 and disable the tx_pll_en to turn off the mpll phy%0d lane%0d",pn,ln),UVM_LOW)  
+
+      //                //DIG_PCS_XF_ATE_OVRD_IN
+      //                jtag_cr_read(pn, 'h2020+'h200*ln, reg_data);
+      //                reg_data[4] = 1'b1; //TX_REQ_ATE_OVRD_VAL
+      //                reg_data[5] = 1'b1; //TX_REQ_ATE_OVRD_EN
+      //                reg_data[6] = 1'b1; //RX_REQ_ATE_OVRD_VAL
+      //                reg_data[7] = 1'b1; //RX_REQ_ATE_OVRD_EN
+      //                jtag_cr_write(pn, 'h2020+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("assert the tx and rx request phy%0d lane%0d",pn,ln),UVM_LOW)
+      //                #600us;
+
+      //                //DIG_PCS_XF_RX_PCS_OUT
+      //                jtag_cr_read(pn, 'h2019+'h200*ln, reg_data);
+      //                if(reg_data[0] != 1)
+      //                   `uvm_error(get_full_name(),$sformatf("Expecting RX ACK(bit[0]) to be de-asserted on phy%0d lane%0d",pn,ln))
+
+      //                //DIG_PCS_XF_TX_PCS_OUT
+      //                jtag_cr_read(pn, 'h2004+'h200*ln, reg_data);
+      //                if(reg_data[0] != 1)
+      //                   `uvm_error(get_full_name(),$sformatf("Expecting TX ACK(bit[0]) to be de-asserted on phy%0d lane%0d",pn,ln))
+
+      //                //DIG_PCS_XF_ATE_OVRD_IN
+      //                jtag_cr_read(pn, 'h2020+'h200*ln, reg_data);
+      //                reg_data[4] = 1'b0; //TX_REQ_ATE_OVRD_VAL
+      //                reg_data[5] = 1'b1; //TX_REQ_ATE_OVRD_EN
+      //                reg_data[6] = 1'b0; //RX_REQ_ATE_OVRD_VAL
+      //                reg_data[7] = 1'b1; //RX_REQ_ATE_OVRD_EN
+      //                jtag_cr_write(pn, 'h2020+'h200*ln, reg_data);
+      //                `uvm_info(get_full_name(),$sformatf("de-assert the tx and rx request phy%0d lane%0d",pn,ln),UVM_LOW)
+      //                #10us;
+
+      //DIG_PCS_XF_RX_PCS_OUT
+      jtag_cr_read(pn, 'h2019+'h200*ln, reg_data);
+      if(reg_data[0] != 0)
+         `uvm_error(get_full_name(),$sformatf("Expecting RX ACK(bit[0]) to be de-asserted on phy%0d lane%0d",pn,ln))
+
+      //DIG_PCS_XF_TX_PCS_OUT
+      jtag_cr_read(pn, 'h2004+'h200*ln, reg_data);
+      if(reg_data[0] != 0)
+         `uvm_error(get_full_name(),$sformatf("Expecting TX ACK(bit[0]) to be de-asserted on phy%0d lane%0d",pn,ln))
+
+      `uvm_info(get_full_name(),$sformatf("rx_pstate go to P0 state phy%0d",pn),UVM_LOW)
+      fork
+         while(1) begin
+            bit[1:0] hdl_data;
+            void'(uvm_hdl_read({`DV_STRINGIFY(`PCIE_TOP),$sformatf(".pcie_core_0.pcie_phy_pipe_0.u_dwc_e32mp_upcs_x4_ns_x16_x4x4x4x4_pipe.phy%0d.rx%0d_pstate",pn,ln)}, hdl_data));
+            if(hdl_data == 0) break;
+            rx_pstate_cnt++;
+            if(rx_pstate_cnt%100 == 0)
+               `uvm_info(get_full_name(),$sformatf("phy%0d lane%0d rx still wait P0 state",pn,ln),UVM_LOW)
+            #10ns;
+         end
+         while(1) begin
+            bit[1:0] hdl_data;
+            void'(uvm_hdl_read({`DV_STRINGIFY(`PCIE_TOP),$sformatf(".pcie_core_0.pcie_phy_pipe_0.u_dwc_e32mp_upcs_x4_ns_x16_x4x4x4x4_pipe.phy%0d.tx%0d_pstate",pn,ln)}, hdl_data));
+            if(hdl_data == 0) break;
+            rx_pstate_cnt++;
+            if(tx_pstate_cnt%100 == 0)
+               `uvm_info(get_full_name(),$sformatf("phy%0d lane%0d tx still wait P0 state",pn,ln),UVM_LOW)
+            #10ns;
+         end
+      join
+
+
+      //loopback enable
+      //if($urandom_range(1)) begin
+      //   pcie_phy_reg = ral.pcie_top.pcie_ss_phy_reg_0.get_reg_by_name($sformatf("pipe_lane%0d_ctrl2",pn*4+ln));
+      //   pcie_phy_reg.read(status,reg_data);
+      //   reg_data[30] = 1'b1; //pipe_laneX_tx2rx_loopbk -> phy_laneX_tx2rx_par_lb_en
+      //   pcie_phy_reg.write(status,reg_data);
+      //   `uvm_info(get_full_name(),$sformatf("tx2rx loopback en by dbi"),UVM_LOW)
+      //end
+      //else begin
+      //LANEN_DIG_ASIC_RX_OVR
+      jtag_cr_read(pn, 'h1000+'h200*ln, reg_data);
+      reg_data[1] = 1'b0; //phy_laneX_rx2tx_par_lb_en 
+      reg_data[0] = 1'b1; //phy_laneX_tx2rx_par_lb_en 
+      reg_data[2] = 1'b1; //overide en
+      jtag_cr_write(pn, 'h1000+'h200*ln, reg_data);
+      `uvm_info(get_full_name(),$sformatf("tx2rx loopback en by jtag"),UVM_LOW)
+      //end
+      //RAWLANEN_DIG_PCS_XF_LANE_OVRD_IN
+      jtag_cr_read(pn, 'h2028+'h200*ln, reg_data);
+      reg_data[2] = 1'b1; //LANE_TX2RX_SER_LB_EN_OVRD_VAL
+      reg_data[0] = 1'b0; //LANE_RX2TX_PAR_LB_EN_OVRD_VAL
+      reg_data[3] = 1'b1; //LANE_TX2RX_SER_LB_EN_OVRD_EN
+      reg_data[1] = 1'b1; //LANE_RX2TX_PAR_LB_EN_OVRD_EN
+      jtag_cr_write(pn, 'h2028+'h200*ln, reg_data);
+      `uvm_info(get_full_name(),$sformatf("tx2rx loopback en by jtag"),UVM_LOW)
+
+   endtask
+
+   task bert_test_per_lane(bit[1:0] pn, bit[1:0] ln);
+      bit[15:0] read_data,write_data;
+      bit[3:0] bert_mode;
+      bit[31:0] Pattern;
+      bit trigger_error = 1'b1;
+      uvm_status_e        status;
+      uvm_reg             pcie_phy_reg;
+      uvm_reg_data_t      reg_data;
+
+
+      //LANEN_DIG_ASIC_RX_OVRD_IN_0
+      jtag_cr_read(pn, 'h1020+'h200*ln, reg_data);
+      reg_data[4] = 1'b1; //rx_data_en 
+      jtag_cr_write(pn, 'h1020+'h200*ln, reg_data);
+
+      jtag_cr_read(pn, 'h1020+'h200*ln, reg_data);
+      reg_data[5] = 1'b1; //overide en
+      jtag_cr_write(pn, 'h1020+'h200*ln, reg_data);
+
+      //bert_mode = $urandom_range(1,13);
+      bert_mode = 1;
+
+      //bert tx ctrl
+      if(bert_mode == 9 || bert_mode == 11)
+         write_data[14:5] = $urandom_range(1,1022);
+      else if(bert_mode == 10) 
+         write_data[14:5] = $urandom_range(1023);
+      write_data[3:0] = bert_mode;
+      jtag_cr_write(pn, 'h1071+'h200*ln, write_data);
+      if(bert_mode == 2) begin
+         jtag_cr_write(pn, 'h1072+'h200*ln, $urandom_range(16'hffff));
+         jtag_cr_write(pn, 'h1073+'h200*ln, $urandom_range(16'hffff));
+         jtag_cr_write(pn, 'h1074+'h200*ln, $urandom_range(16'hffff));
+         jtag_cr_write(pn, 'h1075+'h200*ln, $urandom_range(16'hffff));
+      end
+      //bert rx ctrl
+      write_data = 0;
+      write_data[3:0] = bert_mode;
+      jtag_cr_write(pn, 'h1093+'h200*ln, write_data);
+      //clear err cnt
+      write_data[4] = 0; //sync
+      jtag_cr_write(pn, 'h1093+'h200*ln, write_data);
+      write_data[4] = 1; //sync
+      jtag_cr_write(pn, 'h1093+'h200*ln, write_data);
+      write_data[4] = 0; //sync
+      jtag_cr_write(pn, 'h1093+'h200*ln, write_data);
+      write_data[4] = 1; //sync
+      jtag_cr_write(pn, 'h1093+'h200*ln, write_data);
+      write_data[4] = 0; //sync
+      jtag_cr_write(pn, 'h1093+'h200*ln, write_data);
+      //10us refer to ate_run_bert_test
+      //LANEN_DIG_RX_LBERT_ERR
+      jtag_cr_read(pn, 'h1094+'h200*ln, reg_data);
+      if(reg_data != 0)
+         `uvm_error(get_full_name(),$sformatf("bert check error : phy%0d lane%0d bert match error status(0x%0x)!",pn,ln,reg_data))
+      `uvm_info(get_full_name(),$sformatf("phy%0d lane %0d begin to inject error",pn,ln),UVM_LOW)
+      jtag_cr_read(pn, 'h1071+'h200*ln, write_data);
+      write_data[4] = 1;
+      jtag_cr_write(pn, 'h1071+'h200*ln, write_data);
+      write_data[4] = 0;
+      jtag_cr_write(pn, 'h1071+'h200*ln, write_data);
+
+      #10us;
+      jtag_cr_read(pn, 'h1094+'h200*ln, reg_data);
+      if(reg_data != 1)
+         `uvm_error(get_full_name(),$sformatf("bert check error : phy%0d lane%0d bert match error status(0x%0x)!",pn,ln,reg_data))
+
+      jtag_cr_write(pn, 'h1071+'h200*ln, 0);
+      jtag_cr_write(pn, 'h1020+'h200*ln, 0);
+      jtag_cr_write(pn, 'h1093+'h200*ln, 0);
+   endtask
+endclass
+
+`endif

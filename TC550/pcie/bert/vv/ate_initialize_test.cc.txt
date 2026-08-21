@@ -1,0 +1,394 @@
+Override per lane resets to 1
+Override tx_req, rx_req, and rx_data_en to 0
+CREG WRITE : ADDR=6020, DATA=80af
+End of ATE test sequence           0
+TEST: Wait for PHY and testbench to initialize
+Start ATE test sequence           1 , config phy in ATE_PCIE5
+PHY parameter settings
+Overriding tx_slat_xfer_sel
+CREG WRITE : ADDR=500c, DATA=1000
+Overriding sup_cntx_en
+CREG WRITE : ADDR=012a, DATA=01ff
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding lane_cntx_en
+CREG WRITE : ADDR=606e, DATA=0040
+Override rx_rate, rx_vco_ld_val
+CREG WRITE : ADDR=6053, DATA=05a0
+CREG WRITE : ADDR=605d, DATA=ffff
+Override rx_dfe_bypass, rx_eq_dfe_tap2, rx_eq_dfe_float_en, rx_cdr_ppm_max
+CREG WRITE : ADDR=6054, DATA=4033
+CREG WRITE : ADDR=605d, DATA=ffff
+CREG WRITE : ADDR=605e, DATA=ff7f
+Override rx_width
+CREG WRITE : ADDR=6057, DATA=1040
+CREG WRITE : ADDR=605e, DATA=ffff
+Override rx_delta_iq
+CREG WRITE : ADDR=6052, DATA=4000
+CREG WRITE : ADDR=605d, DATA=ffff
+Override rx_lpd, rx_pstate
+CREG WRITE : ADDR=6025, DATA=0014
+Override rx_recal_skip_en, rx_recal_force_en, rx_recal_bank_sel, rx_coarse_adpt_force_en, rx_coarse_adpt_skip_en
+CREG WRITE : ADDR=6030, DATA=0754
+Overriding tx_rate
+CREG WRITE : ADDR=603e, DATA=0000
+CREG WRITE : ADDR=604c, DATA=fffe
+Override tx_lpd, tx_pstate, tx_pll_en
+CREG WRITE : ADDR=6026, DATA=c014
+Override tx_width_r
+CREG WRITE : ADDR=603e, DATA=0004
+CREG WRITE : ADDR=604c, DATA=ffff
+Override tx_master_pll_state_r, lane_ref_sel_r
+CREG WRITE : ADDR=6027, DATA=3c00
+Override tx_recal_bank_sel_r, tx_recal_force_en_r, tx_recal_skip_en_r
+CREG WRITE : ADDR=6039, DATA=0054
+Overriding tx_invert_r, tx_clk_rdy_r, and TX_DATA_EN
+CREG WRITE : ADDR=5001, DATA=0123
+Overriding sup_misc
+CREG WRITE : ADDR=0111, DATA=0000
+CREG WRITE : ADDR=0128, DATA=3fff
+Perform refa_clk_div2_en, refb_clkdet_en_r override
+CREG WRITE : ADDR=0002, DATA=0f08
+Overriding refa_lane_clk_en
+CREG WRITE : ADDR=011c, DATA=0000
+CREG WRITE : ADDR=0128, DATA=3fff
+Perform refb_clk_div2_en, refa_clkdet_en_r override
+CREG WRITE : ADDR=0003, DATA=0f08
+Overriding refb_lane_clk_en
+CREG WRITE : ADDR=0127, DATA=0000
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding txup_term_offset
+CREG WRITE : ADDR=010f, DATA=0000
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding txdn_term_offset
+CREG WRITE : ADDR=0110, DATA=0000
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding rx_term_offset
+CREG WRITE : ADDR=010f, DATA=0000
+CREG WRITE : ADDR=0128, DATA=3fff
+Get access to external resistor, single PHY use the resistor
+CREG WRITE : ADDR=001f, DATA=0018
+Overriding bg_en_r
+CREG WRITE : ADDR=0004, DATA=03e7
+Overriding rx_vref_ctrl
+CREG WRITE : ADDR=0110, DATA=0a00
+CREG WRITE : ADDR=0128, DATA=3fff
+Asserting mplla_word_clk_en
+CREG WRITE : ADDR=0005, DATA=000c
+Overriding mplla_short_lock_en
+CREG WRITE : ADDR=011b, DATA=4200
+CREG WRITE : ADDR=0129, DATA=03ff
+Asserting mpllb_word_clk_en
+CREG WRITE : ADDR=0006, DATA=000c
+Overriding mpllb_short_lock_en
+CREG WRITE : ADDR=0126, DATA=4200
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mplla_bw_low
+CREG WRITE : ADDR=0114, DATA=0657
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding mpllb_bw_low
+CREG WRITE : ADDR=011f, DATA=0657
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding mplla_bw_high
+CREG WRITE : ADDR=0115, DATA=0639
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding mpllb_bw_high
+CREG WRITE : ADDR=0120, DATA=0639
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding mplla_multiplier
+CREG WRITE : ADDR=0113, DATA=0a00
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding mplla_bw_threshold
+CREG WRITE : ADDR=0112, DATA=0c88
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding ref_clk_mplla_div
+CREG WRITE : ADDR=0112, DATA=0c88
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding mplla_word_clk_div
+CREG WRITE : ADDR=011c, DATA=0002
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_tx_clk_div
+CREG WRITE : ADDR=0113, DATA=0a01
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding mplla_fb_clk_div4_en
+CREG WRITE : ADDR=011b, DATA=4600
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_ctl_buf_bypass
+CREG WRITE : ADDR=011b, DATA=4600
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_ssc_peak
+CREG WRITE : ADDR=011a, DATA=0000
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_frac_den
+CREG WRITE : ADDR=0117, DATA=0000
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_frac_rem
+CREG WRITE : ADDR=0118, DATA=0000
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_ssc_step_size
+CREG WRITE : ADDR=0119, DATA=0000
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_frac_en
+CREG WRITE : ADDR=011b, DATA=4600
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_ssc_up_spread
+CREG WRITE : ADDR=011b, DATA=4600
+CREG WRITE : ADDR=0129, DATA=03ff
+Overriding mplla_ssc_en_r
+CREG WRITE : ADDR=0137, DATA=0300
+CREG WRITE : ADDR=0137, DATA=0301
+Overriding mpllb_multiplier
+CREG WRITE : ADDR=011e, DATA=0a00
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding mpllb_bw_threshold
+CREG WRITE : ADDR=011d, DATA=0c88
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding ref_clk_mpllb_div
+CREG WRITE : ADDR=011d, DATA=0c88
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding mpllb_word_clk_div
+CREG WRITE : ADDR=0127, DATA=0002
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_tx_clk_div
+CREG WRITE : ADDR=011e, DATA=0a01
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding mpllb_fb_clk_div4_en
+CREG WRITE : ADDR=0126, DATA=4600
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_ctl_buf_bypass
+CREG WRITE : ADDR=0126, DATA=4600
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_ssc_peak
+CREG WRITE : ADDR=0125, DATA=0000
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_frac_quot
+CREG WRITE : ADDR=0121, DATA=0000
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding mpllb_frac_den
+CREG WRITE : ADDR=0122, DATA=0000
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_frac_rem
+CREG WRITE : ADDR=0123, DATA=0000
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_ssc_step_size
+CREG WRITE : ADDR=0124, DATA=0000
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_frac_en
+CREG WRITE : ADDR=0126, DATA=4600
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_ssc_up_spread
+CREG WRITE : ADDR=0126, DATA=4600
+CREG WRITE : ADDR=012b, DATA=0fff
+Overriding mpllb_ssc_en_r
+CREG WRITE : ADDR=0137, DATA=0301
+CREG WRITE : ADDR=0137, DATA=0305
+Overriding mplla/b_recal_skip_en, mplla/b_recal_force_en, mplla/b_cal_bank_sel
+CREG WRITE : ADDR=010e, DATA=2a54
+Overriding mplla_init_cal_disable, mpllb_init_cal_disable, rtune_req
+CREG WRITE : ADDR=0112, DATA=0c88
+CREG WRITE : ADDR=011d, DATA=0488
+CREG WRITE : ADDR=0128, DATA=3fff
+CREG WRITE : ADDR=012b, DATA=0fff
+CREG WRITE : ADDR=0104, DATA=0002
+Hooking up tx0_clk to appropriate ROPLL word/dword/qword, mplla/b word/dword/qword clock
+Overriding tx_clk_sel
+CREG WRITE : ADDR=60f9, DATA=01f2
+Overriding tx_eq_main_r, tx_beacon_en_r, tx_disable_r
+CREG WRITE : ADDR=5003, DATA=0548
+Overriding tx_eq_pre and tx_eq_post
+CREG WRITE : ADDR=5004, DATA=2050
+Overriding mplla_frac_quot
+CREG WRITE : ADDR=0116, DATA=0000
+CREG WRITE : ADDR=0128, DATA=3fff
+Overriding mpllb_frac_quot
+CREG WRITE : ADDR=0121, DATA=0000
+CREG WRITE : ADDR=012a, DATA=01ff
+Overriding tx_misc_23_8
+CREG WRITE : ADDR=6045, DATA=0000
+Overriding tx_misc
+CREG WRITE : ADDR=603e, DATA=0004
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_align_wide_xfer_en
+CREG WRITE : ADDR=603e, DATA=0044
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_detrx_req
+CREG WRITE : ADDR=602f, DATA=0002
+Overriding rx_misc_23_8
+CREG WRITE : ADDR=605b, DATA=0000
+Overriding rx_misc
+CREG WRITE : ADDR=6056, DATA=0050
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding tx_dcc_ctrl_cm_range
+CREG WRITE : ADDR=603f, DATA=0090
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_dcc_ctrl_diff_range
+CREG WRITE : ADDR=603f, DATA=0099
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding rx_eq_ctle_boost
+CREG WRITE : ADDR=6050, DATA=4000
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_eq_ctle_pole
+CREG WRITE : ADDR=6050, DATA=4300
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_eq_dfe_tap1
+CREG WRITE : ADDR=6055, DATA=0014
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_eq_vga_gain
+CREG WRITE : ADDR=6050, DATA=4310
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_eq_att_lvl
+CREG WRITE : ADDR=6050, DATA=4310
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_eq_afe_rate
+CREG WRITE : ADDR=6051, DATA=1000
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_eq_dfe_float_en
+CREG WRITE : ADDR=6054, DATA=4033
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_cdr_vco_config
+CREG WRITE : ADDR=6052, DATA=4000
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_dcc_ctrl_cm_range
+CREG WRITE : ADDR=6056, DATA=9050
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_dcc_ctrl_diff_range
+CREG WRITE : ADDR=6056, DATA=9950
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_ref_ld_val
+CREG WRITE : ADDR=6055, DATA=1214
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding the RX_MARGIN_IN_PROG_OVRD and RX_MARGIN_ERROR_CLEAR_OVRD to 0
+CREG WRITE : ADDR=603a, DATA=2002
+Overriding tx_ropll_cp_ctl_prop
+CREG WRITE : ADDR=6040, DATA=005a
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_out_div
+CREG WRITE : ADDR=6042, DATA=0100
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_ropll_cp_ctl_intg
+CREG WRITE : ADDR=6040, DATA=3fda
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_rc_filter
+CREG WRITE : ADDR=603f, DATA=1899
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_postdiv
+CREG WRITE : ADDR=6041, DATA=0010
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_fbdiv
+CREG WRITE : ADDR=6041, DATA=0810
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_refdiv
+CREG WRITE : ADDR=6041, DATA=0811
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_vco_low_freq
+CREG WRITE : ADDR=603f, DATA=1899
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_v2i_mode
+CREG WRITE : ADDR=6040, DATA=ffda
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_bypass
+CREG WRITE : ADDR=6042, DATA=0104
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_ropll_word_clk_div_sel
+CREG WRITE : ADDR=6042, DATA=0114
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_pll_word_clk_freq
+CREG WRITE : ADDR=6043, DATA=8000
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_ropll_div_clk_en
+CREG WRITE : ADDR=6042, DATA=0114
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_ropll_refsel
+CREG WRITE : ADDR=6042, DATA=0115
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_fastedge_en
+CREG WRITE : ADDR=6043, DATA=8000
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding tx_ropll_word_clk_en_r
+CREG WRITE : ADDR=6075, DATA=0018
+Overriding rx_offcan_cont_r, rx_adapt_cont_r, rx_adapt_req_r
+CREG WRITE : ADDR=600a, DATA=0002
+Overriding rx_offcan_cont
+CREG WRITE : ADDR=6057, DATA=9040
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding tx_offcan_cont
+CREG WRITE : ADDR=6041, DATA=4811
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding rx_adapt_cont
+CREG WRITE : ADDR=6057, DATA=d040
+CREG WRITE : ADDR=605e, DATA=ffff
+Clear the rx_adapt_dis IRQ to prevent rx_ack assertion after initial powerup sequence completed
+CREG WRITE : ADDR=60cc, DATA=0001
+Overriding rx_adapt_mode
+CREG WRITE : ADDR=6057, DATA=d640
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_adapt_sel
+CREG WRITE : ADDR=6057, DATA=d740
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_eq_afe_config
+CREG WRITE : ADDR=6051, DATA=1458
+CREG WRITE : ADDR=605d, DATA=ffff
+Overriding rx_margin_iq and rx_delta_iq
+CREG WRITE : ADDR=600c, DATA=1014
+Overriding rx_term_en_r, rx_disable_r, rx_cdr_ssc_en_r, rx_cdr_track_en_r
+CREG WRITE : ADDR=702e, DATA=0002
+CREG WRITE : ADDR=6007, DATA=4000
+CREG WRITE : ADDR=5023, DATA=00c3
+Overriding rx_term_acdc
+CREG WRITE : ADDR=6057, DATA=d741
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_sigdet_hf_en
+CREG WRITE : ADDR=6058, DATA=0000
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_sigdet_lf_threshold
+CREG WRITE : ADDR=6058, DATA=0003
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_sigdet_hf_threshold
+CREG WRITE : ADDR=6058, DATA=0013
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_sigdet_lfps_filter_en
+CREG WRITE : ADDR=6058, DATA=0013
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding rx_div16p5_clk_en
+CREG WRITE : ADDR=6057, DATA=c741
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding tx_ropll_div16p5_clk_en
+CREG WRITE : ADDR=6042, DATA=0115
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding rx_term_ctrl
+CREG WRITE : ADDR=6057, DATA=c74f
+CREG WRITE : ADDR=6059, DATA=6000
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding tx_term_ctrl
+CREG WRITE : ADDR=6043, DATA=8006
+CREG WRITE : ADDR=6044, DATA=0010
+CREG WRITE : ADDR=604c, DATA=ffff
+Overriding rx_dig_div_clk_sel
+CREG WRITE : ADDR=6059, DATA=6000
+CREG WRITE : ADDR=605f, DATA=01ff
+Overriding rx_div_clk_en
+CREG WRITE : ADDR=6059, DATA=6000
+CREG WRITE : ADDR=605f, DATA=01ff
+Overriding rx_div_clk_sel
+CREG WRITE : ADDR=6059, DATA=6000
+CREG WRITE : ADDR=605f, DATA=01ff
+Disable RX CDR PPM detector
+CREG WRITE : ADDR=7067, DATA=0004
+Overriding lane_rx2tx_par_lb_en and lane_tx2rx_ser_lb_en to 0
+CREG WRITE : ADDR=6028, DATA=000a
+Overriding tx_ropll_125mhz_clk_en
+CREG WRITE : ADDR=6041, DATA=4811
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_dly_cal_en
+CREG WRITE : ADDR=6042, DATA=0115
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding rx_125mhz_clk_en
+CREG WRITE : ADDR=6057, DATA=c74f
+CREG WRITE : ADDR=605e, DATA=ffff
+Overriding tx_dig_ropll_div_clk_sel
+CREG WRITE : ADDR=6044, DATA=0010
+CREG WRITE : ADDR=604d, DATA=3fff
+Overriding tx_dual_cntx_en
+CREG WRITE : ADDR=603e, DATA=8044
+CREG WRITE : ADDR=604d, DATA=3fff
+End of ATE test sequence           1
+

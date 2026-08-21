@@ -1,0 +1,16 @@
+Start ATE test sequence           2 , PHY power up
+Overriding lane_cntx_en_o
+CREG WRITE : ADDR=606c, DATA=0200
+CREG WRITE : ADDR=606c, DATA=0600
+Enable ate mode
+CREG WRITE : ADDR=019d, DATA=0001
+Overriding TOKEN_DLY
+CREG WRITE : ADDR=0133, DATA=0000
+De-assrting pma tx_data_en to 0
+CREG WRITE : ADDR=5001, DATA=0123
+CREG WRITE : ADDR=5001, DATA=0123
+Overriding rx_invert
+CREG WRITE : ADDR=5020, DATA=0008
+De-assrting per lane resets to 0
+CREG WRITE : ADDR=6020, DATA=80aa
+Waiting for PHY power up...
